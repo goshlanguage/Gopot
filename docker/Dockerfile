@@ -5,4 +5,4 @@ RUN go get gopkg.in/mgo.v2 \
 
 EXPOSE "80"
 
-ENTRYPOINT ["/usr/local/go/bin/go", "run", "/tmp/gopot/wp.go"]
+ENTRYPOINT ["/tmp/gopot/wp"]
