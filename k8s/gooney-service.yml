@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: "mongodb01"
+  labels:
+    app: "mongodb01"
+spec:
+  ports:
+  - port: 27017
+    targetPort: 27001
+  selector:
+    app: "mongodb01"

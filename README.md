@@ -1,4 +1,4 @@
-# GooneyPot
+# Gopot
 
 A wordpress honeypot written in Golang.
 This repo is inspired by DustyFresh's python Wordpress - [honeypress]. 

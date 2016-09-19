@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: "mongodb-node-01"
+  labels:
+    app: "mongodb-node-01"
+spec:
+  replicas: 1
+  selector:
+    app: "mongodb-node-01"
+  template:
+    metadata:
+      labels:
+        app: "mongodb-node-01"
+    spec:
+      containers:
+      - name: "mongodb-node-01"
+        image: 192.168.0.139:5000/db/mongo
+        command:
+          - mongod
+          - "--replSet"
+          - "app_replica"
+          - "--smallfiles"
+          - "--noprealloc"
+        env:
+        - name: ENV
+          value: "prod"
+        ports:
+        - containerPort: 27017
+        volumeMounts:
+        - name: mongo-persistent-storage
+          mountPath: /data/db
+          readOnly: false
+      volumes:
+      - name: mongo-persistent-storage
+        hostPath:
+          path: /data/mongo/mongodb-node-01
+      nodeSelector:
+        database: "true"
+        mongodb01: "true"

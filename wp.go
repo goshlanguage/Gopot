@@ -12,7 +12,7 @@ func isTor(ip string) bool{
         This is done by checking the user's IP against a list of exit nodes
         at https://check.torproject.org/
     */
-    
+
     return false
 }
 
@@ -30,7 +30,7 @@ func shipData(r *http.Request){
     reqData := make(map[string]string)
     reqData["host"] = r.Host
     reqData["uri"] = r.URL.Path
-    reqData["user-agent"] = r.UserAgent() 
+    reqData["user-agent"] = r.UserAgent()
     //reqData["cookies"] = strings.Join(r.Cookies(), ",")
     reqData["ip"] = r.Header.Get("X-Forwarded-For")
     //reqData["headers"] = r.Header
@@ -76,11 +76,11 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
     // Data is a map that we use to ship data to our template
     Data := map[string]string {
-        "Title": "DeadBeef", 
+        "Title": "DeadBeef",
         "Subtitle": "Cattle never been better",
         "RequestURL": r.Host,
     }
-    err = t.ExecuteTemplate(w, "Data", Data) 
+    err = t.ExecuteTemplate(w, "Data", Data)
     if err != nil {
         http.Error(w, err.Error(), http.StatusInternalServerError)
     }
@@ -90,7 +90,7 @@ func adminHandler(w http.ResponseWriter, r *http.Request){
     /*
         adminRedirect should provide a 302 redirect that mimics wp-admin to fool scripts
     */
- 
+
     t, err := template.New("").ParseFiles("tmpl/wp-login.php")
     if err != nil {
         http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -98,15 +98,15 @@ func adminHandler(w http.ResponseWriter, r *http.Request){
 
     // Data is a map that we use to ship data to our template
     Data := map[string]string {
-        "Title": "DeadBeef", 
+        "Title": "DeadBeef",
         "Subtitle": "Cattle never been better",
         "RequestURL": r.Host,
     }
-    err = t.ExecuteTemplate(w, "Data", Data) 
+    err = t.ExecuteTemplate(w, "Data", Data)
     if err != nil {
         http.Error(w, err.Error(), http.StatusInternalServerError)
     }
-   
+
 }
 
 func main(){
@@ -121,16 +121,16 @@ func main(){
     http.HandleFunc("/wp-login.php", adminHandler)
     http.HandleFunc("/wp-content/", func(w http.ResponseWriter, r *http.Request){
         uri := "./static/" + r.URL.Path[1:]
-        
+
         fmt.Println(uri)
         http.ServeFile(w, r, uri)
-    }) 
+    })
     http.HandleFunc("/wp-admin/", func(w http.ResponseWriter, r *http.Request){
          uri := "./static/" + r.URL.Path[1:]
-        
+
         fmt.Println(uri)
         http.ServeFile(w, r, uri)
     })
     fmt.Println("Listening..")
-    http.ListenAndServe(":8080", nil)
+    http.ListenAndServe(":80", nil)
 }
