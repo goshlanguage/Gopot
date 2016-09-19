@@ -132,5 +132,5 @@ func main(){
         http.ServeFile(w, r, uri)
     })
     fmt.Println("Listening..")
-    http.ListenAndServe(":80", nil)
+    http.ListenAndServe("0.0.0.0:80", nil)
 }
