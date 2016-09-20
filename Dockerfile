@@ -1,10 +1,10 @@
 FROM golang
 
-COPY wp.go /tmp/
+COPY wp.go /go/src/app/wp.go
+WORKDIR /go/src/app
 
-RUN go get gopkg.in/mgo.v2 \
-    && go build /tmp/wp.go
+RUN go build wp.go
 
 EXPOSE "80"
 
-ENTRYPOINT ["/tmp/wp"]
+ENTRYPOINT ["/go/src/app/wp"]
