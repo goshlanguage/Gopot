@@ -32,7 +32,8 @@ func shipData(r *http.Request){
     reqData["uri"] = r.URL.Path
     reqData["user-agent"] = r.UserAgent()
     //reqData["cookies"] = strings.Join(r.Cookies(), ",")
-    reqData["ip"] = r.Header.Get("X-Forwarded-For")
+    reqData["ip"] = r.RemoteAddr
+    reqData["xforwardedfor"] = r.Header.Get("X-Forwarded-For")
     //reqData["headers"] = r.Header
     //reqData["form-data"] = strings.Join(r.PostForm,",")
 
@@ -48,7 +49,7 @@ func shipData(r *http.Request){
         }
     }
     */
-    fmt.Printf("%v", reqData)
+    fmt.Printf("DATA: %v", reqData)
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
